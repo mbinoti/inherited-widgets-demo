@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const User(
+  runApp(User(
     name: 'Marcos',
     child: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Inherited Widgets Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(),
     );
   }
@@ -42,7 +40,7 @@ class MyHomePage extends StatelessWidget {
 }
 
 class User extends InheritedWidget {
-  const User({
+  User({
     required this.name,
     required Widget child,
   }) : super(child: child);
