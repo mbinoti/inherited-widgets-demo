@@ -1,20 +1,60 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const User(
+    name: 'Marcos',
+    child: MyApp(),
+  ));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+    return MaterialApp(
+      title: 'Inherited Widgets Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Example using InheritedWidgets (:'),
+      ),
+      body: Center(
+        child: Text(
+          'Flutter developer! user ${User.of(context)?.name}',
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
     );
+  }
+}
+
+class User extends InheritedWidget {
+  const User({
+    required this.name,
+    required Widget child,
+  }) : super(child: child);
+
+  final String name;
+
+  static User? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<User>();
+  }
+
+  @override
+  bool updateShouldNotify(User old) {
+    return name != old.name;
   }
 }
